@@ -12,13 +12,15 @@ const PORT = process.env.PORT || 5000;
 app.use(cors());
 app.use(bodyParser.json());
 
+const mongo_url = process.env.MONGO_CONN;
+
 // Connect to MongoDB
-mongoose.connect('mongodb+srv://sagarp050699:69LPGk1jjxGyX6va@cluster0.tmd7p.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-}).then(() => {
-    console.log('Connected to MongoDB')
-});
+mongoose.connect(mongo_url)
+    .then(()=>{
+        console.log("mongo db connected");
+    }).catch((err)=>{
+        console.log("mongo Connection Error" , err);
+    })
 
 // Routes
 app.use('/api/events', eventRoutes);
